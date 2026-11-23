@@ -1,0 +1,31 @@
+name: Native ns-3.49 Python 3.13 CMake / real Gymnasium loop
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-real-simulation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile pinned ns-3.49 and C++ Protobuf/ZMQ bridge, then run tests
+        run: |
+          docker build --progress=plain --build-arg BUILD_JOBS=4 -t vtns3gym:ci .
+      - name: Execute actual Python-controlled ns-3 UDP simulation and save evidence
+        run: |
+          mkdir -p evidence
+          docker run --rm \
+            -v "$PWD/evidence:/evidence" \
+            -e VTNS3GYM_EVIDENCE=/evidence/native-closed-loop.json \
+            vtns3gym:ci
+          test -s evidence/native-closed-loop.json
+          python3 -c 'import json; r=json.load(open("evidence/native-closed-loop.json")); assert r["engine"]=="real-ns3"; assert r["total_delivered_packets"]>0; assert r["steps"][-1]["terminated"]; print("NATIVE_PASS", r["total_delivered_packets"])'
+      - name: Persist *real* simulation observations/actions/rewards/KPIs
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-ns3-349-closed-loop
+          path: evidence/native-closed-loop.json
