@@ -21,7 +21,7 @@ RUN cp -r cpp/contrib/vtns3gym /opt/ns3/contrib/vtns3gym \
     && cp cpp/scratch/modern-gym-loop.cc /opt/ns3/scratch/modern-gym-loop.cc
 # Modern ns-3.49 CMake build. No Waf/legacy ns-O-RAN forks.
 RUN cmake -S /opt/ns3 -B /opt/ns3/cmake-build -G Ninja \
-      -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17 \
+      -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=23 \
       -DNS3_EXAMPLES=OFF -DNS3_TESTS=OFF -DNS3_GSL=OFF \
       "-DNS3_ENABLED_MODULES=core;network;internet;point-to-point;vtns3gym" \
     && cmake --build /opt/ns3/cmake-build \
