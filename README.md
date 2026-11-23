@@ -15,7 +15,7 @@ ZeroMQ/Protocol Buffers protocol**. See [ATTRIBUTION.md](ATTRIBUTION.md).
 
 - **ns-3.49**, upstream commit `418210e8914e9f6bcb5cddbcc94a2cecb7853b68` (not a moving branch).
 - **Python 3.13**, base image `python:3.13-bookworm`.
-- **C++17 and CMake/Ninja** under ns-3.49.
+- **C++23 and CMake/Ninja** under ns-3.49 (mandatory upstream CMake requirement).
 - Debian Bookworm's `libzmq3-dev`, `libprotobuf-dev`, `protobuf-compiler` supply the compiled wire dependencies.
 - Python package: `vt-ns3-gym==0.1.0` (this source); `gymnasium==1.4.0`, `pyzmq==27.1.0`, `protobuf>=6.31,<7`, `numpy>=2.2,<3`.
 - GitHub Actions uses the same Dockerfile and uploads a JSON trace **only after a real compiled native simulation**.
