@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=80,<83", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vt-ns3-gym"
+version = "0.1.0"
+description = "Modern independently tested ns-3.49 / Gymnasium ZeroMQ bridge"
+requires-python = ">=3.13"
+license = {text = "GPL-2.0-only"}
+dependencies = [
+    "gymnasium==1.4.0",
+    "numpy>=2.2,<3",
+    "pyzmq==27.1.0",
+    "protobuf>=6.31,<7",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.4,<10"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
