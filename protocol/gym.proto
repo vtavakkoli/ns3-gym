@@ -1,0 +1,33 @@
+syntax = "proto3";
+package vtns3gym;
+
+// Independent versioned wire protocol. No implicit compatibility with
+// the old tkn-tub ns3-gym/SimInitMsg protocol.
+message Request {
+  uint32 protocol_version = 1;
+  enum Command {
+    UNSPECIFIED = 0;
+    RESET = 1;
+    STEP = 2;
+    CLOSE = 3;
+  }
+  Command command = 2;
+  uint64 seed = 3;
+  uint32 action = 4;
+}
+
+message Response {
+  uint32 protocol_version = 1;
+  bool ok = 2;
+  string error = 3;
+  repeated double observation = 4;
+  double reward = 5;
+  bool terminated = 6;
+  bool truncated = 7;
+  uint32 episode_step = 8;
+  uint64 received_packets = 9;
+  uint64 transmitted_packets = 10;
+  uint64 received_bytes = 11;
+  uint64 step_received_packets = 12;
+  double throughput_mbps = 13;
+}
